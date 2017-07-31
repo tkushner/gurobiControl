@@ -153,12 +153,15 @@ class GRBEncoder:
         #self.add_glucose_equation(0.2215, 0.8531, -7.89, 60, 60,-40, 40, 18.34)
         #self.add_glucose_equation(0.4747, 0.7077, -7.935, 120, 120, -48, 48, 21.25)
         # -- BEGIN NEW MODEL window --
-        #self.add_glucose_equation(0.4937, 0.5582, -3.4635, 30, 30, -11, 11, 5.6) #30Win100
+        self.add_glucose_equation(0.4937, 0.5582, -3.4635, 30, 30, -11, 11, 5.6) #30Win100
         #self.add_glucose_equation(0.2332, 0.7945, -3.7159, 30, 30, -20, 20, 10.3) #30Win200
+        #self.add_glucose_equation(0.1395, 0.8868, -3.7594, 30, 30, -20.6, 20.5, 10.5) #30win300
         #self.add_glucose_equation(0.5415, 0.6144, -13.5804, 45, 45, -3.3, 3.3, 1.7) #45Win100
         #self.add_glucose_equation(0.4192, 0.6847, -11.3894, 45, 45, -21, 21, 10.7) #45Win200
         #self.add_glucose_equation(0.4673, 0.6404, -10.8473, 60, 60, -17.4, 17.4, 8.8) #60win200
-        self.add_glucose_equation(0.3654, 0.7140, -9.8856, 60, 60, -23.1, 23.1, 11.8) #60win300
+        #self.add_glucose_equation(0.3654, 0.7140, -9.8856, 60, 60, -23.1, 23.1, 11.8) #60win300
+        #self.add_glucose_equation(0.4896, 0.6134, -10.3822, 120, 120, -12, 12, 6.1) #120win300
+
         self.add_iob_equations()
         self.setup_controller_equations()
 
