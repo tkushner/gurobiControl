@@ -157,7 +157,8 @@ class GRBEncoder:
         #self.add_glucose_equation(0.2332, 0.7945, -3.7159, 30, 30, -20, 20, 10.3) #30Win200
         #self.add_glucose_equation(0.5415, 0.6144, -13.5804, 45, 45, -3.3, 3.3, 1.7) #45Win100
         #self.add_glucose_equation(0.4192, 0.6847, -11.3894, 45, 45, -21, 21, 10.7) #45Win200
-        self.add_glucose_equation(0.4673, 0.6404, -10.8473, 60, 60, -17.4, 17.4, 8.8) #60win200
+        #self.add_glucose_equation(0.4673, 0.6404, -10.8473, 60, 60, -17.4, 17.4, 8.8) #60win200
+        self.add_glucose_equation(0.3654, 0.7140, -9.8856, 60, 60, -23.1, 23.1, 11.8) #60win300
         self.add_iob_equations()
         self.setup_controller_equations()
 
