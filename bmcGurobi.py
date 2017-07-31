@@ -140,17 +140,24 @@ class GRBEncoder:
         #self.add_bounds_to_vars()
         self.create_past_variables_and_constraints(120)
         self.add_glucose_change_bounds()
-        # -- BEGIN OLD MODEL --
+        # -- BEGIN OLD MODEL first pass--
+        # (a(1) a(2) a(3) DeltaG DeltaI minus95 plus95 stdev )
         # self.add_glucose_equation(0.363, 0.594, -2.25, 30, 30, -6, 6, 1.1)
         # self.add_glucose_equation(0.382, 0.675, -13.35, 45, 45, -7.5, 7.5, 1.4)
         # self.add_glucose_equation(0.516, 0.52, -13.3, 60, 60, -2.5, 2.5, 0.5)
         # self.add_glucose_equation(0.461, 0.467, -17.01, 120, 120, -4, 4, 0.9 )
-        # -- BEGIN NEW MODEL --
+        # -- BEGIN NEW MODEL global --
         #self.add_glucose_equation(-0.2324, 1.2047, -1.7098, 30, 30, -40, 40, 18.8)
-        self.add_glucose_equation(0.0940, 0.9315, -4.0147, 30, 30, -28, 28, 13)
-        self.add_glucose_equation(0.1605, 0.9024, -7.452, 45, 45, -34, 34, 16)
-        self.add_glucose_equation(0.2215, 0.8531, -7.89, 60, 60,-40, 40, 18.34)
-        self.add_glucose_equation(0.4747, 0.7077, -7.935, 120, 120, -48, 48, 21.25)
+        #self.add_glucose_equation(0.0940, 0.9315, -4.0147, 30, 30, -28, 28, 13)
+        #self.add_glucose_equation(0.1605, 0.9024, -7.452, 45, 45, -34, 34, 16)
+        #self.add_glucose_equation(0.2215, 0.8531, -7.89, 60, 60,-40, 40, 18.34)
+        #self.add_glucose_equation(0.4747, 0.7077, -7.935, 120, 120, -48, 48, 21.25)
+        # -- BEGIN NEW MODEL window --
+        #self.add_glucose_equation(0.4937, 0.5582, -3.4635, 30, 30, -11, 11, 5.6) #30Win100
+        #self.add_glucose_equation(0.2332, 0.7945, -3.7159, 30, 30, -20, 20, 10.3) #30Win200
+        #self.add_glucose_equation(0.5415, 0.6144, -13.5804, 45, 45, -3.3, 3.3, 1.7) #45Win100
+        #self.add_glucose_equation(0.4192, 0.6847, -11.3894, 45, 45, -21, 21, 10.7) #45Win200
+        self.add_glucose_equation(0.4673, 0.6404, -10.8473, 60, 60, -17.4, 17.4, 8.8) #60win200
         self.add_iob_equations()
         self.setup_controller_equations()
 
