@@ -135,13 +135,13 @@ class GRBEncoder:
             self._mdl.addConstr(self.id(i) <= self.id_max - self.id_max * self.saturation(i))
             self._mdl.addConstr(self.id(i) >= 0.0)
 
-    def setup(self):
+    def setup(self, a1, a2, a3, deltaG, deltaI, e_min, e_max, e_mean):
         self.create_all_variables()
         #self.add_bounds_to_vars()
         self.create_past_variables_and_constraints(120)
         self.add_glucose_change_bounds()
         # -- BEGIN OLD MODEL first pass--
-        # (a(1) a(2) a(3) DeltaG DeltaI minus95 plus95 stdev )
+        # (a(1) a(2) a(3) DeltaG DeltaI minus95 plus95 mean )
         # self.add_glucose_equation(0.363, 0.594, -2.25, 30, 30, -6, 6, 1.1)
         # self.add_glucose_equation(0.382, 0.675, -13.35, 45, 45, -7.5, 7.5, 1.4)
         # self.add_glucose_equation(0.516, 0.52, -13.3, 60, 60, -2.5, 2.5, 0.5)
@@ -153,15 +153,16 @@ class GRBEncoder:
         #self.add_glucose_equation(0.2215, 0.8531, -7.89, 60, 60,-40, 40, 18.34)
         #self.add_glucose_equation(0.4747, 0.7077, -7.935, 120, 120, -48, 48, 21.25)
         # -- BEGIN NEW MODEL window --
-        #self.add_glucose_equation(0.4937, 0.5582, -3.4635, 30, 30, -11, 11, 5.6) #30Win100
-        #self.add_glucose_equation(0.2332, 0.7945, -3.7159, 30, 30, -20, 20, 10.3) #30Win200
-        #self.add_glucose_equation(0.1395, 0.8868, -3.7594, 30, 30, -20.6, 20.5, 10.5) #30win300
-        #self.add_glucose_equation(0.5415, 0.6144, -13.5804, 45, 45, -3.3, 3.3, 1.7) #45Win100
-        #self.add_glucose_equation(0.4192, 0.6847, -11.3894, 45, 45, -21, 21, 10.7) #45Win200
-        #self.add_glucose_equation(0.4673, 0.6404, -10.8473, 60, 60, -17.4, 17.4, 8.8) #60win200
-        #self.add_glucose_equation(0.3654, 0.7140, -9.8856, 60, 60, -23.1, 23.1, 11.8) #60win300
-        self.add_glucose_equation(0.4896, 0.6134, -10.3822, 120, 120, -12, 12, 6.1) #120win300
-
+        # self.add_glucose_equation(0.4427, 0.5991, -3.4710, 30, 30, -14.4, 14.4, 5.15) #30win120
+        # self.add_glucose_equation(0.2659, 0.7625, -3.5694, 30, 30, -20, 20, 7.9) #30win180
+        # self.add_glucose_equation(0.1390, 0.8877, -3.7537, 30, 30, -19.5, 19.5, 8.7) #30win300
+        # self.add_glucose_equation(0.5831, 0.5548, -12.3819, 45, 45, -9.4, 9.4, 2.96) #45win120
+        # self.add_glucose_equation(0.4709, 0.6317, -11.0545, 45, 45, -19.9, 19.9, 7) #45win180
+        # self.add_glucose_equation(0.2966, 0.7797, -9.5391, 45, 45, -22, 22, 9.8) #45win300
+        # self.add_glucose_equation(0.5081, 0.6090, -10.7458, 60, 60 -14.3, 14.3, 5.2) #60win180
+        # self.add_glucose_equation(0.3668, 0.7123, -9.8962, 60, 60, -23.17, 23.17, 10) #60win300
+        # self.add_glucose_equation(0.4740, 0.6105, -9.8247, 120, 120, -12, 12, 4.9) #120win300
+        self.add_glucose_equation(a1, a2, a3, deltaG, deltaI, e_min, e_max, e_mean)
         self.add_iob_equations()
         self.setup_controller_equations()
 
@@ -189,12 +190,20 @@ class GRBEncoder:
 
 def main(argv):
     if len(argv) < 3:
-        print('Usage: python ', sys.argv[0], '[Depth to Explore]  [Output file]')
+        print('Usage: python ', sys.argv[0], '[Depth to Explore]  [Output file] [a1, a2, a3, deltaG, deltaI, e_min, e_max, e_mean]')
     d = int(sys.argv[1])
     oFile = open(sys.argv[2], 'a')
+    a1p= float(sys.argv[3])
+    a2p= float(sys.argv[4])
+    a3p= float(sys.argv[5])
+    dg=float(sys.argv[6])
+    di=float(sys.argv[7])
+    emin=float(sys.argv[8])
+    emax=float(sys.argv[9])
+    emean=float(sys.argv[10])
     for depths in range(0, d, 10):
         g = GRBEncoder(depths)
-        g.setup()
+        g.setup(a1p, a2p, a3p, dg, di, emin, emax, emean)
         g.solve_for_glucose(oFile)
     print('DONE')
     oFile.close()
