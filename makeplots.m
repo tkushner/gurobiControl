@@ -3,6 +3,7 @@
 %aug 1 2017
 
 clear Data
+close all
 beep off
 
 allGurobifiles=dir('*.csv');
