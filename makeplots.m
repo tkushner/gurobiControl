@@ -1,5 +1,6 @@
 %plot outputs from gurobi
 clear Data
+cd ../GurobiControl
 
 allGurobifiles=dir('*.csv');
 MAX=numel(allGurobifiles);
