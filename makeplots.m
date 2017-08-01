@@ -1,6 +1,9 @@
 %plot outputs from gurobi
+%taisa kushner 
+%aug 1 2017
+
 clear Data
-cd ../GurobiControl
+beep off
 
 allGurobifiles=dir('*.csv');
 MAX=numel(allGurobifiles);
