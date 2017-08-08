@@ -6,7 +6,7 @@ clear Data
 close all
 beep off
 
-allGurobifiles=dir('*.csv');
+allGurobifiles=dir('PSO3-*');
 MAX=numel(allGurobifiles);
 
 Data(MAX).times=[];
@@ -23,9 +23,15 @@ for i=1:MAX
     hold on;
     for n = 1 : numel(Data(i).upbnd)
         plot([Data(i).times(n),Data(i).times(n)], [Data(i).upbnd(n) Data(i).lowbnd(n)],'Color',[.612,.769,.635],'linewidth',10);
+        maxt=max(Data(i).times)+10;
+        b1=plot(1:maxt, repmat(70,1,maxt),'--r');
+        plot(1:maxt,repmat(180,1,maxt),'--r');
+        b2=plot(1:maxt,repmat(80,1,maxt),'--k');
+        plot(1:maxt,repmat(120,1,maxt),'--k')
     end
-    title(strcat({'Reachability analysis for: '},strrep(strrep(Data(3).lbl, '.csv',''),'_',{' '})),'FontSize',16)
+    title(strcat({'Reachability analysis for: '},strrep(strrep(Data(i).lbl, '.csv',''),'_',{' '})),'FontSize',16)
     xlabel('depth (time)','FontSize',14)
     ylabel('glucose concentration (mg/dL)','FontSize',14)
+    legend([b1,b2],'Safe Bounds for hyper and hypoglycemia','Goal Euglycemic Range')
     hold off;
 end
