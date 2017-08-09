@@ -5,17 +5,17 @@
 clear Data
 close all
 beep off
-
-allGurobifiles=dir('PSO3-*');
+allGurobifiles=dir('./outputs/PSO3-002*');
 MAX=numel(allGurobifiles);
 
 Data(MAX).times=[];
 Data(MAX).lowbnd=[];
 Data(MAX).upbnd=[];
 Data(MAX).lbl=[];
+
 for i=1:MAX
     Data(i).lbl=allGurobifiles(i).name;
-    [Data(i).times, Data(i).lowbnd, Data(i).upbnd]=importGurobiData(allGurobifiles(i).name);
+    [Data(i).times, Data(i).lowbnd, Data(i).upbnd]=importGurobiData(strcat('./outputs/',allGurobifiles(i).name));
 end
 
 for i=1:MAX

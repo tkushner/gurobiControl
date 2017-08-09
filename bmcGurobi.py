@@ -14,7 +14,7 @@ class GRBEncoder:
         self.__saturation = {}
         self.Ti = 160.0 # 160.0
         self.Td = 60.0 # 60.0
-        self.Kp = 0.1881 # 0.05 # 0.023 #daily insulin / 135
+        self.Kp = 0.7 # 0.05 # 0.023 #daily insulin / 135
         self.K1 = 0.5
         self.K2 = 0.25
         self.K0 = 0.75
@@ -141,49 +141,26 @@ class GRBEncoder:
         #self.add_bounds_to_vars()
         self.create_past_variables_and_constraints(120)
         self.add_glucose_change_bounds()
-        # -- BEGIN OLD MODEL first pass--
-        # (a(1) a(2) a(3) DeltaG DeltaI minus95 plus95 mean )
-        # self.add_glucose_equation(0.363, 0.594, -2.25, 30, 30, -6, 6, 1.1)
-        # self.add_glucose_equation(0.382, 0.675, -13.35, 45, 45, -7.5, 7.5, 1.4)
-        # self.add_glucose_equation(0.516, 0.52, -13.3, 60, 60, -2.5, 2.5, 0.5)
-        # self.add_glucose_equation(0.461, 0.467, -17.01, 120, 120, -4, 4, 0.9 )
-        # -- BEGIN NEW MODEL global --
-        #self.add_glucose_equation(-0.2324, 1.2047, -1.7098, 30, 30, -40, 40, 18.8)
-        #self.add_glucose_equation(0.0940, 0.9315, -4.0147, 30, 30, -28, 28, 13)
-        #self.add_glucose_equation(0.1605, 0.9024, -7.452, 45, 45, -34, 34, 16)
-        #self.add_glucose_equation(0.2215, 0.8531, -7.89, 60, 60,-40, 40, 18.34)
-        #self.add_glucose_equation(0.4747, 0.7077, -7.935, 120, 120, -48, 48, 21.25)
-        # -- BEGIN NEW MODEL window --
-        # self.add_glucose_equation(0.4427, 0.5991, -3.4710, 30, 30, -21.3737, 21.3737, -0.3503) #30win120
-        # self.add_glucose_equation(0.2659, 0.7625, -3.5694, 30, 30, -29.7956, 29.7956, -0.8365) #30win180
-        # self.add_glucose_equation(0.1390, 0.8877, -3.7537, 30, 30, -32.7504, 32.7504, -1.1986) #30win300
-        # self.add_glucose_equation(0.5831, 0.5548, -12.3819, 45, 45, -11.4839, 11.4839, -0.0824) #45win120
-        # self.add_glucose_equation(0.4709, 0.6317, -11.0545, 45, 45, -27.0285, 27.0285, -0.6019) #45win180
-        # self.add_glucose_equation(0.2966, 0.7797, -9.5391, 45, 45, -37.9523, 37.9523, -1.5014) #45win300
-        # self.add_glucose_equation(0.5081, 0.6090, -10.7458, 60, 60, -19.2875, 19.2875, -0.2701) #60win180
-        # self.add_glucose_equation(0.3668, 0.7123, -9.8962, 60, 60, -40.4967, 40.4967, -1.4879) #60win300
-        # self.add_glucose_equation(0.4740, 0.6105, -9.8247, 120, 120, -19.6818, 19.6818, -0.3030) #120win300
-        # ---------- PSO3-004-0002 * -------
-        # self.add_glucose_equation(0.5561, 0.5186, -2.7006, 30, 30, -17.1129, 17.1129, -0.1990) #30win120
-        # self.add_glucose_equation(0.6043, 0.5786, -6.2729, 45, 45, -9.2599, 9.2599, -0.0366) #45win120
-        # self.add_glucose_equation(0.3536, 0.5890, -2.1699, 30, 30, -24.2099, 24.2099, -0.6459) #30win180
-        # self.add_glucose_equation(0.4875, 0.5801, -3.506, 45, 45, -23.8945, 23.8945, -0.4885) #45win180
-        # self.add_glucose_equation(0.6144, 0.5033, -5.1581, 60, 60, -16.4863, 16.4863, -0.1758) #60win180
-        # self.add_glucose_equation(0.2127,0.8308,-2.3086,30,30,-25.6309,25.6309,-0.6546) #30win300
-        # self.add_glucose_equation(0.3158, 0.7570, -3.8016, 45, 45, -27.9155, 27.9155, -0.7989) #45win300
-        # self.add_glucose_equation(0.4543, 0.6501, -4.9978, 60, 60, -25.5651, 25.5651, -0.7989) #60win300
-        # self.add_glucose_equation(0.5207, 0.5509, -4.5882, 120, 120, -15.7443, 15.7443, -0.1750) #120win300
-        # ---------- PSO3-004-0008 * ----------
-        # self.add_glucose_equation(0.3967, 0.6400, -3.5999, 30, 30, -17.4727, 17.4727, -0.3386) #30win120
-        # self.add_glucose_equation(0.5369, 0.5898, -12.4336, 45, 45, -8.8914, 8.8914, -0.0569) #45win120
-        # self.add_glucose_equation(0.2015, 0.8200, -3.2709, 30, 30, -24.6486, 24.6486, -0.6139) #30win180
-        # self.add_glucose_equation(0.3850, 0.7123, -10.7910, 45, 45, -21.4425, 21.4425, -0.5559) #45win180
-        # self.add_glucose_equation(0.4508, 0.6663, -12.0373, 60, 60, -13.7278, 13.7278, -0.2332) #60win180
+        #-------PSO3-002-0009--------
+        #30Win24
+        # self.add_glucose_equation( 0.4307   , 0.6218   , -2.9344   , 30   , 30   , -24.3910   , 24.3910   , -0.4881   )
+        # #45Win24
+        # self.add_glucose_equation( 0.5451   , 0.6024   , -6.9404   , 45   , 45   , -14.3447   , 14.3447   , -0.1123   )
+        # #30Win36
+        # self.add_glucose_equation( 0.2544   , 0.7552   , -2.0613   , 30   , 30   , -32.2626   , 32.2626   , -1.2042   )
+        # #45Win36
+        # self.add_glucose_equation( 0.4254   , 0.6676   , -6.5656   , 45   , 45   , -27.6987   , 27.6987   , -0.9330   )
+        # #60Win36
+        # self.add_glucose_equation( 0.5260   , 0.6129   , -7.5532   , 60   , 60   , -23.3841   , 23.3841   , -0.6511   )
+        # # #30Win60
+        self.add_glucose_equation( 0.1119   , 0.8920   , -2.3452   , 30   , 30   , -36.5600   , 36.5600   , -2.1203   )
+        #45Win60
+        self.add_glucose_equation( 0.1229   , 0.9347   , -5.0880   , 45   , 45   , -42.3329   , 42.3329   , -2.7167   )
+        #60Win60
+        self.add_glucose_equation( 0.1643   , 0.9060   , -6.5287   , 60   , 60   , -46.9662   , 46.9662   , -2.8769   )
+        #120Win60
+        self.add_glucose_equation( 0.4372   , 0.6329   , -10.3460   , 120   , 120   , -30.5892   , 30.5892   , -0.6121   )
 
-        self.add_glucose_equation(0.0782, 0.9621, -5.7203, 30, 30, -40.9056, 40.9056, -0.0569) #30win300
-        self.add_glucose_equation(0.2195, 0.9125, -16.5566, 45, 45, -27.0867, 27.0867, -0.7355) #45win300
-        self.add_glucose_equation(0.1832, 0.8762, -13.3488, 60, 60, -28.6171, 28.6171, -0.6182) #60win300
-        self.add_glucose_equation(0.4318, 0.4723, -4.1432, 120, 120, -9.7168, 9.7168, -0.0323) #120win300
 
         #self.add_glucose_equation(a1, a2, a3, deltaG, deltaI, e_min, e_max, e_mean)
 
