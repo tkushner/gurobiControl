@@ -5,7 +5,7 @@
 clear Data
 close all
 beep off
-allGurobifiles=dir('./outputs/PSO3-002*');
+allGurobifiles=dir('./outputs/PSO3-*');
 MAX=numel(allGurobifiles);
 
 Data(MAX).times=[];
